@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Rock Paper Scissor Game</title>
+  
+   <link rel="stylesheet" href="rps-auto.css">
+
+</head>
+
+<body>
+  <p class="heading">Rock Paper Scissors</p>
+
+  <button onclick="
+    playgame('Rock');
+    " class="move">
+    <img src="images/rock-emoji.png" class="image-design"></button>
+
+  <button onclick="
+    playgame('Paper');
+     " class="move">
+     <img src="images/paper-emoji.png" class="image-design"></button>
+
+  <button onclick="
+      playgame('Scissor');
+    " class="move">
+    <img src="images/scissor-emoji.png" class="image-design" ></button>
+
+  <p class="js-result result"></p>
+  <p class="js-moves"></p>
+  <p class="js-score score"></p>
+
+  <button onclick="
+      score.wins=0;
+      score.losses=0;
+      score.ties=0;
+      localStorage.removeItem('score');
+      updatescore();
+  " class="reset-button">Reset score</button>
+  <button class="auto-play-css" onclick=autoplay()>Autoplay</button>
+  <div class="Note">
+    Note: to stop autoplay click again to autoplay button.
+  </div>
+
+<script src="rps-auto.js"></script>
+
+</body>
+</html>
