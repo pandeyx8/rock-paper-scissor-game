@@ -1,45 +1,67 @@
-body{
-  background-color: rgb(25,25,25);
+body {
+  background-color: #121212;
   color: white;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  text-align: center;
+  padding: 20px;
 }
 
-.heading{
+.heading {
+  font-size: 36px;
   font-weight: bold;
-  font-size: 30px;
+  margin-bottom: 20px;
 }
-.image-design{
-  height: 50px;
+
+.image-design {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  padding: 10px;
+  background-color: #1f1f1f;
+  border: 3px solid #ffffff30;
+  transition: transform 0.2s ease;
 }
-.move{
+
+.image-design:hover {
+  transform: scale(1.1);
+  border-color: #00c853;
+}
+
+.move {
   background-color: transparent;
-  border: 3px solid white;
-  width: 120px;
-  height: 120px;
-  border-radius: 60px;
-  margin-right: 10px;
-  cursor: pointer;
-}
-.result {
-  font-size: 25px;
-  font-weight: bold;
-  margin-top: 50px;
-}
-.score{
-  margin-top: 60px;
-}
-.reset-button,
-.auto-play-css{
-  background-color: white;
   border: none;
-  font-size: 15px;
-  padding: 8px 15px;
+  margin: 10px;
   cursor: pointer;
-} 
+}
 
-.Note{
-  color: rgb(228, 12, 12);
-  padding-top: 1.5%;
+.result {
+  font-size: 28px;
+  margin-top: 20px;
+  font-weight: bold;
+  color: #f1f1f1;
+}
+
+.score {
+  font-size: 20px;
+  margin-top: 10px;
+  color: #ccc;
+}
+
+.reset-button, .auto-play-css, .mode-toggle {
+  padding: 10px 20px;
+  font-size: 16px;
+  margin: 10px 5px;
+  cursor: pointer;
+  border-radius: 6px;
+  border: none;
+  background-color: white;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.reset-button:hover,
+.auto-play-css:hover {
+  background-color: #00c853;
+  color: white;
 }
 
 .top-bar {
@@ -49,16 +71,40 @@ body{
 }
 
 .mode-toggle {
-  background-color: white;
-  border: none;
-  font-size: 14px;
-  padding: 6px 12px;
-  cursor: pointer;
-  border-radius: 5px;
+  background-color: #ffffff;
+  color: #333;
+}
+
+.mode-toggle.active {
+  background-color: #00c853;
+  color: white;
 }
 
 .js-mode-status {
-  margin-top: 60px;
-  font-size: 16px;
-  color: lightgreen;
+  font-size: 18px;
+  margin-top: 15px;
+  color: #00e676;
+}
+
+.js-guess-score {
+  font-size: 18px;
+  margin-top: 10px;
+  color: #ffcc80;
+}
+
+.Note {
+  margin-top: 10px;
+  color: red;
+  font-size: 14px;
+}
+
+.auto-play-css.active {
+  background-color: #00c853;
+  color: white;
+}
+
+.result-image {
+  width: 40px;
+  height: 40px;
+  vertical-align: middle;
 }

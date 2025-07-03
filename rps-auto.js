@@ -20,21 +20,29 @@ if (score === null) {
 updatescore();
 updateGuessScore();
 
-let isautoplay = false;
-let intervalid = null;
+//autoplay
+
+let isAutoPlaying = false;
+let intervalId;
 
 function autoplay() {
-  if (!isautoplay) {
-    intervalid = setInterval(() => {
-      const move = pickcompmove();
-      playgame(move);
-    }, 3000);
-    isautoplay = true;
+  const autoplayButton = document.querySelector('.auto-play-css');
+  
+  if (!isAutoPlaying) {
+    autoplayButton.classList.add('active');
+    intervalId = setInterval(() => {
+      const moves = ['Rock', 'Paper', 'Scissor'];
+      const randomMove = moves[Math.floor(Math.random() * 3)];
+      playgame(randomMove);
+    }, 1000);
+    isAutoPlaying = true;
   } else {
-    clearInterval(intervalid);
-    isautoplay = false;
+    clearInterval(intervalId);
+    autoplayButton.classList.remove('active');
+    isAutoPlaying = false;
   }
 }
+
 
 function playgame(playerMove) {
   const compMove = pickcompmove();
@@ -46,8 +54,9 @@ function playgame(playerMove) {
     else guessScore.wrong++;
 
     document.querySelector('.js-result').innerHTML = correct ? '🎉 Correct Guess!' : '❌ Wrong Guess!';
-    document.querySelector('.js-moves').innerHTML =
-      `You guessed <img src="images/${playerMove.toLowerCase()}-emoji.png" class="image-design"> & Bot played <img src="images/${compMove.toLowerCase()}-emoji.png" class="image-design">`;
+    document.querySelector('.js-moves').innerHTML = 
+   `You <img src="images/${playerMove.toLowerCase()}-emoji.png" class="result-image"> vs Bot <img src="images/${compMove.toLowerCase()}-emoji.png" class="result-image">`;
+
 
     updateGuessScore();
 
@@ -70,8 +79,9 @@ function playgame(playerMove) {
     }
 
     document.querySelector('.js-result').innerHTML = result;
-    document.querySelector('.js-moves').innerHTML =
-      `You <img src="images/${playerMove.toLowerCase()}-emoji.png" class="image-design"> vs Bot <img src="images/${compMove.toLowerCase()}-emoji.png" class="image-design">`;
+    document.querySelector('.js-moves').innerHTML = 
+   `You guessed <img src="images/${playerMove.toLowerCase ()}-emoji.png" class="result-image"> & Bot played <img src="images/${compMove.toLowerCase()}-emoji.png" class="result-image">`;
+
 
     localStorage.setItem('score', JSON.stringify(score));
     updatescore();
@@ -95,13 +105,20 @@ function updateGuessScore() {
     `Correct: ${guessScore.correct}, Wrong: ${guessScore.wrong}`;
 }
 
+//toggle mode function
+
 function toggleMode() {
+
   if (currentMode === 'play') {
     currentMode = 'guess';
     document.querySelector('.js-mode-status').innerText = 'Mode: Guess the Bot';
+    document.querySelector('.mode-toggle').classList.add('active');
+
   } else {
     currentMode = 'play';
     document.querySelector('.js-mode-status').innerText = 'Mode: Play Against Bot';
+    document.querySelector('.mode-toggle').classList.remove('active');
+
   }
 
   // Reset result and moves when switching
