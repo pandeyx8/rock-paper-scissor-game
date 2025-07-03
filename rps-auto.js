@@ -1,4 +1,8 @@
 let currentMode = 'play';
+let playHistory = [];
+let guessHistory = [];
+
+
 
 let guessScore = {
   correct: 0,
@@ -6,6 +10,9 @@ let guessScore = {
 };
 
 let score = JSON.parse(localStorage.getItem('score'));
+
+
+
 
 if (score === null) {
   score = { wins: 0, losses: 0, ties: 0 };
@@ -59,6 +66,11 @@ function playgame(playerMove) {
 
 
     updateGuessScore();
+//for history
+    const entry = `You guessed: ${playerMove}, Bot: ${compMove}`;
+    guessHistory.unshift(entry);
+    if (guessHistory.length > 3) guessHistory.pop();
+    updateHistoryList();
 
   } else {
     let result = '';
@@ -85,6 +97,12 @@ function playgame(playerMove) {
 
     localStorage.setItem('score', JSON.stringify(score));
     updatescore();
+//for history
+    const entry = `You: ${playerMove} vs Bot: ${compMove}`;
+    playHistory.unshift(entry);
+    if (playHistory.length > 3) playHistory.pop();
+    updateHistoryList();
+
   }
 }
 
@@ -130,6 +148,9 @@ function toggleMode() {
   } else {
     updatescore();
   }
+
+  updateHistoryList();
+
 }
 
 //reset score function
@@ -148,4 +169,25 @@ function resetCurrentScore() {
 
   document.querySelector('.js-result').innerText = '';
   document.querySelector('.js-moves').innerText = '';
+
+  if (currentMode === 'guess') {
+  guessHistory = [];
+  } else {
+  playHistory = [];
+  }
+  updateHistoryList();
+
+
+}
+
+
+//update history
+function updateHistoryList() {
+  const historyList = document.getElementById('history-list');
+  const title = document.querySelector('.history-title');
+  title.textContent = currentMode === 'guess' ? 'Last 3 Guesses:' : 'Last 3 Moves:';
+
+  const currentHistory = currentMode === 'guess' ? guessHistory : playHistory;
+  historyList.innerHTML = currentHistory.map(item => `<li>${item}</li>`).join('');
+
 }
