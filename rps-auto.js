@@ -96,8 +96,8 @@ function playgame(playermove){
    innerHTML=result;
    document.querySelector('.js-moves').innerHTML
    =`You
-<img src="images/${playermove}-emoji.png" class="image-design">
-<img src="images/${compmove}-emoji.png" class="image-design">
+<img src="images/${playermove.toLowerCase()}-emoji.png" class="image-design">
+<img src="images/${compmove.toLowerCase()}-emoji.png" class="image-design">
 computer`;
    
 }
