@@ -41,3 +41,24 @@ body{
   color: rgb(228, 12, 12);
   padding-top: 1.5%;
 }
+
+.top-bar {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.mode-toggle {
+  background-color: white;
+  border: none;
+  font-size: 14px;
+  padding: 6px 12px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.js-mode-status {
+  margin-top: 60px;
+  font-size: 16px;
+  color: lightgreen;
+}

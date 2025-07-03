@@ -1,3 +1,9 @@
+let currentMode = 'play';
+
+let guessScore = {
+  correct: 0,
+  wrong: 0
+};
 
 let score = JSON.parse(localStorage.getItem('score'));
 
@@ -12,115 +18,117 @@ if (score === null) {
 }
 
 updatescore();
+updateGuessScore();
 
+let isautoplay = false;
+let intervalid = null;
 
-
-//for every refresh score becomes 0    //wins:0,
-   //losses:0,
-   //ties: 0
-
-let isautoplay=false;
-let intervalid;
-
-function autoplay(){
-  if(!isautoplay){
-    intervalid = setInterval(function(){
-    const playermove=pickcompmove();
-
-    playgame(playermove);
-  },3000);
-  isautoplay=true;
-  }
-  else {
+function autoplay() {
+  if (!isautoplay) {
+    intervalid = setInterval(() => {
+      const move = pickcompmove();
+      playgame(move);
+    }, 3000);
+    isautoplay = true;
+  } else {
     clearInterval(intervalid);
-    isautoplay=false;
+    isautoplay = false;
   }
 }
 
-function playgame(playermove){
+function playgame(playerMove) {
+  const compMove = pickcompmove();
 
-   const compmove=pickcompmove();
+  if (currentMode === 'guess') {
+    const correct = playerMove === compMove;
 
-   let result='';
+    if (correct) guessScore.correct++;
+    else guessScore.wrong++;
 
-   if(playermove==='Scissor'){
-       if(compmove==='Rock'){
-       result='You Lose..';
-      }
-      else if(compmove==='Paper'){
-       result='You Win..!!';
-      }
-      else if(compmove==='Scissor'){
-       result='Tie..'
-      }
-   }
+    document.querySelector('.js-result').innerHTML = correct ? '🎉 Correct Guess!' : '❌ Wrong Guess!';
+    document.querySelector('.js-moves').innerHTML =
+      `You guessed <img src="images/${playerMove.toLowerCase()}-emoji.png" class="image-design"> & Bot played <img src="images/${compMove.toLowerCase()}-emoji.png" class="image-design">`;
 
-   else if(playermove==='Paper'){
-     if(compmove==='Rock'){
-       result='You Win..!!';
-       }
-       else if(compmove==='Paper'){
-       result='Tie..';
-       }
-       else if(compmove==='Scissor'){
-       result='You Lose..'
-       }
-   }
+    updateGuessScore();
 
-   else if(playermove==='Rock'){
-     if(compmove==='Rock'){
-     result='Tie..';
-     }
-     else if(compmove==='Paper'){
-     result='You Lose..';
-     }
-     else if(compmove==='Scissor'){
-     result='You Win..!!'
-     }
-   }
+  } else {
+    let result = '';
 
-   if(result==='You Win..!!'){
-     score.wins+=1;
-   }
-   else if(result==='You Lose..'){
-     score.losses+=1;
-   }
-   else if(result==='Tie..'){
-     score.ties+=1;
-   }
+    if (playerMove === compMove) {
+      result = 'Tie!';
+      score.ties++;
+    } else if (
+      (playerMove === 'Rock' && compMove === 'Scissor') ||
+      (playerMove === 'Paper' && compMove === 'Rock') ||
+      (playerMove === 'Scissor' && compMove === 'Paper')
+    ) {
+      result = 'You Win!';
+      score.wins++;
+    } else {
+      result = 'You Lose!';
+      score.losses++;
+    }
 
-   localStorage.setItem('score',JSON.stringify(score));
-   
-   updatescore();
+    document.querySelector('.js-result').innerHTML = result;
+    document.querySelector('.js-moves').innerHTML =
+      `You <img src="images/${playerMove.toLowerCase()}-emoji.png" class="image-design"> vs Bot <img src="images/${compMove.toLowerCase()}-emoji.png" class="image-design">`;
 
-   document.querySelector('.js-result').
-   innerHTML=result;
-   document.querySelector('.js-moves').innerHTML
-   =`You
-<img src="images/${playermove.toLowerCase()}-emoji.png" class="image-design">
-<img src="images/${compmove.toLowerCase()}-emoji.png" class="image-design">
-computer`;
-   
-}
-
-function updatescore(){
-   document.querySelector('.js-score').innerHTML=`wins:${score.wins},losses: 
-   ${score.losses},Ties:${score.ties}`
+    localStorage.setItem('score', JSON.stringify(score));
+    updatescore();
+  }
 }
 
 function pickcompmove() {
- const rand = Math.random();
- let compmove = '';
+  const rand = Math.random();
+  if (rand < 1 / 3) return 'Rock';
+  if (rand < 2 / 3) return 'Paper';
+  return 'Scissor';
+}
 
- if (rand >= 0 && rand < 1 / 3) {
-   compmove = 'Rock';
- }
- else if (rand >= 1 / 3 && rand < 2 / 3) {
-   compmove = 'Paper';
- }
- else if (rand >= 2 / 3 && rand < 1) {
-   compmove = 'Scissor';
- }
+function updatescore() {
+  document.querySelector('.js-score').innerHTML =
+    `Wins: ${score.wins}, Losses: ${score.losses}, Ties: ${score.ties}`;
+}
 
- return compmove;
+function updateGuessScore() {
+  document.querySelector('.js-score').innerHTML =
+    `Correct: ${guessScore.correct}, Wrong: ${guessScore.wrong}`;
+}
+
+function toggleMode() {
+  if (currentMode === 'play') {
+    currentMode = 'guess';
+    document.querySelector('.js-mode-status').innerText = 'Mode: Guess the Bot';
+  } else {
+    currentMode = 'play';
+    document.querySelector('.js-mode-status').innerText = 'Mode: Play Against Bot';
+  }
+
+  // Reset result and moves when switching
+  document.querySelector('.js-result').innerText = '';
+  document.querySelector('.js-moves').innerText = '';
+
+  if (currentMode === 'guess') {
+    updateGuessScore();
+  } else {
+    updatescore();
+  }
+}
+
+//reset score function
+function resetCurrentScore() {
+  if (currentMode === 'guess') {
+    guessScore.correct = 0;
+    guessScore.wrong = 0;
+    updateGuessScore();
+  } else {
+    score.wins = 0;
+    score.losses = 0;
+    score.ties = 0;
+    localStorage.removeItem('score');
+    updatescore();
+  }
+
+  document.querySelector('.js-result').innerText = '';
+  document.querySelector('.js-moves').innerText = '';
 }
