@@ -1,56 +1,46 @@
-Rock Paper Scissors Game
-This is a browser-based Rock Paper Scissors game developed using HTML, CSS, and JavaScript. It supports both a classic play mode and an alternative "Guess the Bot" mode. The game includes autoplay functionality, persistent score tracking using localStorage, and a history panel for recent moves or guesses.
+# Rock Paper Scissors – Web Game
 
-Live Demo
-Play here: pandeyx8.github.io/rock-paper-scissor-game
+A browser-based implementation of the classic Rock Paper Scissors game with enhanced features like autoplay, score persistence, dual gameplay modes, and a recent move history panel.
 
-Features
-Dual Modes:
+> **Live Demo**: [pandeyx8.github.io/rock-paper-scissor-game](https://pandeyx8.github.io/rock-paper-scissor-game)
 
-Play Against Bot – Standard gameplay where the user competes against the computer.
+---
 
-Guess the Bot – User predicts the bot’s move instead of selecting their own.
+##  Key Features
 
-Autoplay Functionality – Automatically plays a move every second in play mode.
+- **Dual Gameplay Modes**
+  - **Play Against Bot** – Traditional mode where the user plays directly against a computer.
+  - **Guess the Bot** – Predict the bot’s next move instead of making your own.
+  
+- **Autoplay Mode** – Automatically plays one move per second, useful for testing or casual viewing.
 
-Persistent Score Tracking – Saves wins, losses, ties (or correct/incorrect guesses) using localStorage.
+- **Persistent Score Tracking**
+  - Win, loss, and tie records (or correct/incorrect guesses) are stored using `localStorage`.
+  - Option to reset scores and clear history.
 
-Recent History Panel – Displays the last 3 moves or guesses depending on the current mode.
+- **Recent History Panel**
+  - Displays the last three moves or guesses based on current mode.
 
-Score Reset Option – Resets current scores and clears move history.
+- **Responsive UI**
+  - Clean, intuitive, and mobile-friendly layout built with semantic HTML and modular CSS.
 
-Responsive and Minimal UI – Simple, clean layout designed for clarity and usability.
+---
 
-Technologies Used
-HTML – Structure and layout
+##  Technologies Used
 
-CSS – Styling and responsive design
+- **HTML5** – Markup and structure
+- **CSS3** – Custom styles and layout
+- **JavaScript (ES6)** – Core game logic, interactivity, mode switching, and state management
 
-JavaScript – Game logic, mode switching, autoplay, and localStorage management
+---
 
-How to Use
-Open the live demo in a web browser.
+##  How to Use
 
-Choose either to play against the bot or guess its move using the toggle button.
+1. Open the [live demo](https://pandeyx8.github.io/rock-paper-scissor-game/) in a modern web browser.
+2. Choose a gameplay mode using the **“Guess Mode”** toggle.
+3. Click on **Rock**, **Paper**, or **Scissors** to make your move or prediction.
+4. Click **Autoplay** to let the bot play repeatedly.
+5. Use the **Reset Score** button to start fresh.
 
-Click on Rock, Paper, or Scissor to make a move or prediction.
+---
 
-Use the "Autoplay" button to run continuous moves.
-
-Use "Reset Score" to clear progress and history.
-
-Project Structure
-bash
-Copy
-Edit
-rock-paper-scissor-game/
--index.html          # Main HTML file
-─ rps-auto.css       # Styling
-─ rps-auto.js        # JavaScript logic
-─ images/            # Move icons
- ─ rock-emoji.png
- ─ paper-emoji.png
- ─ scissor-emoji.png
-Author
-Priyanshu Pandey
-This project was created as part of personal learning and practice in front-end development.
