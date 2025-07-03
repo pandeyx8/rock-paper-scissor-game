@@ -1,17 +1,18 @@
 
-let score =
- //to avoid zero score after evry refresh
- JSON.parse(localStorage.getItem('score'));
+let score = JSON.parse(localStorage.getItem('score'));
 
- if(score===null){
-   score={
-     wins:0,
-     losses:0,
-     ties:0
-   };
- }
+if (score === null) {
+  score = { wins: 0, losses: 0, ties: 0 };
+} else {
+  const confirmReset = confirm("Continue with previous score?");
+  if (!confirmReset) {
+    score = { wins: 0, losses: 0, ties: 0 };
+    localStorage.setItem('score', JSON.stringify(score));
+  }
+}
 
- updatescore();
+updatescore();
+
 
 
 //for every refresh score becomes 0    //wins:0,
